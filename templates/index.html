@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    
+    <div class="navbar">
+        <h2>TIMEGEN</h2>
+        <div class="navbar-content">
+            <a href="#">Home</a>
+            <a href="/page2.html">How to upload</a>
+            
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>TIMETABLE GENERATOR</h1>
+
+        <form action="/view" method="post" enctype="multipart/form-data">
+            <h2>Upload files</h2>
+            <label for="file1">Partially filled Excel File:</label>
+            <input type="file" id="file1" name="file1" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"><br><br>
+            
+            <label for="file2">course-teacher mapped File</label>
+            <input type="file" id="file2" name="file2" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"><br><br>
+            
+            <label for="file3">course-hour mapped File</label>
+            <input type="file" id="file3" name="file3" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"><br><br>
+            
+            <h2>Generate and Download Timetable</h2>
+            <button type="submit">Generate and Download</button>
+        </form>
+    </div>
+    
+</body>
+</html>
