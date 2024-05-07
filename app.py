@@ -34,7 +34,8 @@ def page2():
 
 @app.route('/downloads/<path:filename>')
 def download_file(filename):
-    return send_from_directory('static', filename, as_attachment=True)
+    
+    return send_file('static/' + filename, as_attachment=True)
 
 
 @app.route('/view', methods=['POST'])
@@ -144,9 +145,36 @@ def view():
         k=k+1
         
     print(timetable)
+
+    k=0
+    teachslot=[]
+    while k<teacher_len:
+        index=0
+        tech=[[0]*TOTAL_HRS for i in range(DAYS)]
+        teachslot.append([teachers[k],'','','','','',''])
+        for i in range(DAYS):
+            for j in range(TOTAL_HRS):
+                if teacherslot[k][index]==0:
+                    teacherslot[k][index]="-"
+                tech[i][j]=teacherslot[k][index]
+                index+=1
+            teachslot.append(tech[i])    
+            index+=17
+        k=k+1
+    print(teachslot)
+
+
     tf=pd.DataFrame(timetable,index=['','monday','tuesday','wednesday','thursday','friday']*t_len,columns=['1st','2nd','3rd','Lunch','4th','5th','6th'])
-    tf.to_excel("static/tf7.xlsx")
-    return send_file("static/tf7.xlsx", as_attachment=True)
+    #tf.to_excel("static/tf7.xlsx")
+    #return send_file("static/tf7.xlsx", as_attachment=True)
+    tc=pd.DataFrame(teachslot,index=['FACULTY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY']*teacher_len,columns=['1st','2nd','3rd','Lunch','4th','5th','6th'])
+    #tc.to_excel("static/tc3.xlsx")
+    #return send_file("static/tc3.xlsx", as_attachment=True)
+    #return send_file("static/tf7.xlsx", as_attachment=True), send_file("static/tc3.xlsx", as_attachment=True)
+    with pd.ExcelWriter("static/final.xlsx") as writer:
+        tf.to_excel(writer,sheet_name="Timetable")
+        tc.to_excel(writer,sheet_name="Teacher Slots")#ts
+    return send_file("static/final.xlsx", as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)

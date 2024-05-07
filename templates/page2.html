@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>how to upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='page2.css') }}">
 </head>
 <body>
-    <h1>instructions on how to upload files</h1>
-    <h1>Download Excel Files</h1>
-    <li><a href="/downloads/ti7.xlsx" download>Download E1</a></li>
-    <li><a href="/downloads/hrs7.xlsx" download>Download E2</a></li>
-    <li><a href="/downloads/c7.xlsx" download>Download E3</a></li>
-<ul>
-    
-</ul>
+    <div class="head">
+        <div class="container">
+            <h1>Instructions on How to Upload Files <a href="/" class="home-link">Home</a></h1>
+        </div>
+    </div>
 
+    <div class="container">
+        <h2>Download Sample Excel Files</h2>
+        <div class="downloads">
+            <ul>
+                <li><a href="/downloads/ti7.xlsx" download>Download Partially filled Timetable</a></li>
+                <li><a href="/downloads/hrs7.xlsx" download>Download Sample Faculty Course Mapping File</a></li>
+                <li><a href="/downloads/c7.xlsx" download>Download Sample Course Hour Mapping File</a></li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
