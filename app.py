@@ -1,3 +1,4 @@
+#final code as on 16 july
 from flask import Flask, render_template, request,send_file
 from flask import Flask, send_from_directory
 import pandas as pd
@@ -67,16 +68,18 @@ def view():
     cell_obj1 = str(sheet_obj.cell(row=1, column=1).value)
     cell_obj2 =str( sheet_obj.cell(row=2, column=1).value)
     
+    #s1=pd.read_excel("Course_teacher_map.xlsx")
     wb = xlsxwriter.Workbook('static/final.xlsx')
     ws = wb.add_worksheet("TimeTable")
     ws2=wb.add_worksheet("TeacherSlot")
-    f2 = wb.add_format({'bold':True,'bg_color':'#b2b2b2'})
+    f2= wb.add_format({'bold':True,'bg_color':'#b2b2b2'})
     f3=wb.add_format({'bg_color':'#808080'})
     f4=wb.add_format({'bold':True,'bg_color':'#808080'})
     f5=wb.add_format({'bg_color':'#b2b2b2'})
     f6 = wb.add_format({'bold':True,'bg_color':'#999999'})
     f7=wb.add_format({'bold':True})
     working_days=["Monday","Tuesday","Wednesday","Thursday","Friday"]
+
 
 
     teachers=s1['faculty'].dropna().unique().tolist()
@@ -109,6 +112,13 @@ def view():
         for k in range(DAYS):
             for j in range(TOTAL_HRS):
                 timeslot[i][index]=str(s2.iat[i,(k*TOTAL_HRS)+j])
+                if timeslot[i][index] in teacher_course:
+                    fac=teacher_course[timeslot[i][index]]
+                    t_index=[]
+                    for teacher in fac:
+                        t_index.append(teachers.index(teacher))
+                    for tindex in t_index:
+                         teacherslot[tindex][index]=timeslot[i][index]
                 index+=1
             index+=GAP
 
@@ -219,7 +229,7 @@ def view():
                 index+=1
             timetable.append(temp[i])
             index+=GAP
-        ws.write(counter,4,classes[k],f7)
+        ws.write(counter,4,classes[k])
         if k%2==0:
             ws.write_row(counter+1,0,['','1st','2nd','3rd','Lunch','4th','5th','6th'],f6)
         else:
@@ -297,4 +307,3 @@ def view():
 
 if __name__ == '__main__':
     app.run(debug=True)
-                    
